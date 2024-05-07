@@ -16,7 +16,7 @@ function Part1() {
 
     return (
         <div>
-            {/* */}
+            {/* 1 */}
             <Landingpage />
         </div>
     );
