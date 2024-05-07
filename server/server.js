@@ -10,7 +10,28 @@ app.get("/health",function(req,res){
     res.status(200)
     res.send({"message" : "Healthy!"})
 })
+//Gets a list of countries
+//CALL THE FUNCTION IN THE PYTHON SCRIPT DON'T FORGET
+app.get("/countries", function(req,res){
+    res.status(200)
+    res.send({Countries : ["Canada" , "France", "Spain"]})
 
+})
+
+//This is graph 1
+app.get("/lineEnergyConsumption", function(req,res){
+    res.status(200)
+    //placeholder image 
+    res.sendFile(__dirname + "/images/testimage.png")
+
+})
+
+//This is graph 2
+app.get("/sustainablePieCharts", function(req, res){
+    res.status(200)
+    //placeholder image 
+    res.sendFile(__dirname + "/images/testimage.png")
+})
 app.get("/pythonTest",async function(req,res){
     const testParam = "TESTPARAMETER"
     const pythonTest = await exec(`python pythonTest.py ${testParam}`, (error, stdout, stderr)=>{
@@ -26,6 +47,7 @@ app.get("/pythonTest",async function(req,res){
     })
     pythonTest.stdin.end()
 })
+
 
 app.get("/imageTest", function(req,res){
     res.status(200)
