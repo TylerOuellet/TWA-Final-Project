@@ -4,6 +4,7 @@ import sys
 from pymongo import MongoClient
 
 # mongodb connection setup
+# cluster_uri = "mongodb+srv://tylerouellet93:YmataxFAcXo3GqlW@cluster0.9xoenc5.mongodb.net/"
 client = MongoClient("mongodb://localhost:27017")
 db = client['project']
 collection = db['test3']
