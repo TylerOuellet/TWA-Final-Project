@@ -34,7 +34,7 @@ const LandingPage = () => {
                         <h2 className="card-text text-center">Line Graph Example</h2>
                         <img src={lineGraphImage} className="card-img-top" alt="Line Graph Example" />
                         <div className="card-body d-grid gap-2">
-                            <a href="#" className="btn btn-primary text-center" onClick={navigateToGraph1}>Select Graph</a>
+                            <a className="btn btn-primary text-center" onClick={navigateToGraph1}>Select Graph</a>
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ const LandingPage = () => {
                         <h2 className="card-text text-center">Pie Graph Example</h2>
                         <img src={pieGraphImage} className="card-img-top" alt="Pie Graph Example" />
                         <div className="card-body d-grid gap-2">
-                            <a href="#" className="btn btn-primary text-center" onClick={navigateToGraph2}>Select Graph</a>
+                            <a className="btn btn-primary text-center" onClick={navigateToGraph2}>Select Graph</a>
                         </div>
                     </div>
                 </div>
@@ -54,7 +54,7 @@ const LandingPage = () => {
                         <h2 className="card-text text-center">Bar Graph Example</h2>
                         <img src={barGraphImage} className="card-img-top" alt="Line Graph Example" />
                         <div className="card-body d-grid gap-2">
-                            <a href="#" className="btn btn-primary text-center" onClick={navigateToGraph3}>Select Graph</a>
+                            <a className="btn btn-primary text-center" onClick={navigateToGraph3}>Select Graph</a>
                         </div>
                     </div>
                 </div>
@@ -63,7 +63,7 @@ const LandingPage = () => {
                         <h2 className="card-text text-center">To be determined Graph Example</h2>
                         <img src={graphfour} className="card-img-top" alt="Pie Graph Example" />
                         <div className="card-body d-grid gap-2">
-                            <a href="#" className="btn btn-primary text-center" onClick={navigateToGraph4}>Select Graph</a>
+                            <a className="btn btn-primary text-center" onClick={navigateToGraph4}>Select Graph</a>
                         </div>
                     </div>
                 </div>

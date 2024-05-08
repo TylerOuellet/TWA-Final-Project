@@ -21,7 +21,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/ViewGraph3" element={<ViewGraph3 />} />
         <Route path="/ViewGraph4" element={<ViewGraph4 />} />
         <Route path="/FinalGenerateGraph" element={<FinalGenerateGraph />} />
-
       </Routes>
     </Router>
   </React.StrictMode>,

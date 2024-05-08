@@ -5,7 +5,7 @@ const FinalGenerateGraph = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center">The Graph</h2>
+            <h2 className="text-center">The Generated Graph</h2>
         </div>
     );
 };

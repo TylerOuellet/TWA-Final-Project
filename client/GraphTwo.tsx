@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const GraphTwo = () => {
@@ -10,22 +10,48 @@ const GraphTwo = () => {
 
     return (
         <div className="container">
-            <h2 className="text-center mb-4">Pick Data to Generate a Bar Graph</h2>
+            <h2 className="text-center mb-4">Pick Data to Generate a Pie Graph</h2>
             <div className="row">
                 <div className="col">
-                    <label htmlFor="countySelect">Select County:</label>
-                </div>
-                <div className="col">
-                    <select className="form-select" id="countySelect">
-                        <option selected>Select a county</option>
-                        <option value="county1">County 1</option>
-                        <option value="county2">County 2</option>
-                        <option value="county3">County 3</option>
-                    </select>
+                    <label>Select Counties:</label>
+                    <ul className="list-group">
+                        <li className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="county1"
+                                aria-label="County 1"
+                                // onChange={handleCheckbox}
+                            />
+                            County 1
+                        </li>
+                        <li className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="county2"
+                                aria-label="County 2"
+                                // onChange={handleCheckbox}
+                            />
+                            County 2
+                        </li>
+                        <li className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="county3"
+                                aria-label="County 3"
+                                // onChange={handleCheckbox}
+                            />
+                            County 3
+                        </li>
+                    </ul>
                 </div>
             </div>
             <div className="row mt-4">
-                <button type="button" className="btn btn-secondary text-center" onClick={handleGenerateGraph}>Generate Graph</button>
+                <button type="button" className="btn btn-secondary text-center" onClick={handleGenerateGraph}>
+                    Generate Graph
+                </button>
             </div>
         </div>
     );

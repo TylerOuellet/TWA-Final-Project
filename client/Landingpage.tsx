@@ -8,7 +8,7 @@ const LandingPage = () => {
   const navigate = useNavigate(); // go to movies 
 
   return (
-    <div className="container text-center">
+    <div className="container">
       <div className='row'>
         <div className="text-center">
           <img src={image} alt="Landing" className="img-fluid" />

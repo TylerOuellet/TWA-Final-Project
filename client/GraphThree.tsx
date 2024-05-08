@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const GraphThree = () => {
     const navigate = useNavigate();
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleCheckboxChange = (e) => {
+        setSelectedOption(e.target.value);
+    };
 
     const handleGenerateGraph = () => {
         navigate('/FinalGenerateGraph');
@@ -13,15 +18,38 @@ const GraphThree = () => {
             <h2 className="text-center mb-4">Pick Data to Generate a Bar Graph</h2>
             <div className="row">
                 <div className="col">
-                    <label htmlFor="countySelect">Select County:</label>
-                </div>
-                <div className="col">
-                    <select className="form-select" id="countySelect">
-                        <option selected>Select a county</option>
-                        <option value="county1">County 1</option>
-                        <option value="county2">County 2</option>
-                        <option value="county3">County 3</option>
-                    </select>
+                    <div className="list-group">
+                        <label className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="greenhouse"
+                                checked={selectedOption === 'greenhouse'}
+                                onChange={handleCheckboxChange}
+                            />
+                            Greenhouse
+                        </label>
+                        <label className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="gdp"
+                                checked={selectedOption === 'gdp'}
+                                onChange={handleCheckboxChange}
+                            />
+                            GDP
+                        </label>
+                        <label className="list-group-item">
+                            <input
+                                className="form-check-input me-1"
+                                type="checkbox"
+                                value="population"
+                                checked={selectedOption === 'population'}
+                                onChange={handleCheckboxChange}
+                            />
+                            Population
+                        </label>
+                    </div>
                 </div>
             </div>
             <div className="row mt-4">
