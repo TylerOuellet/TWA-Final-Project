@@ -5,9 +5,10 @@ import sys
 from pymongo import MongoClient
 
 # mongodb connection setup
+cluster_uri = "mongodb+srv://tylerouellet93:YmataxFAcXo3GqlW@cluster0.9xoenc5.mongodb.net/"
 client = MongoClient("mongodb://localhost:27017")
 db = client['project']
-collection = db['test2']
+collection = db['data']
 
 def graph_according_to_country(country):
     query = {"country": country}
@@ -23,6 +24,8 @@ def graph_according_to_country(country):
     cursor = collection.find(query, projection)
 
     df = pd.DataFrame(list(cursor))
+    
+    file_name = "first_graph.png"
 
     plt.figure(figsize=(10, 6))
     plt.plot(df['year'], df['oil_consumption'], label='Oil', linestyle='-', color='orange')
@@ -34,7 +37,8 @@ def graph_according_to_country(country):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.show()
+    # plt.show()
+    plt.savefig(f"../server/output/{file_name}")
 
 # checking for arg error
 if len(sys.argv) != 2:
