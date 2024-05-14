@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const GraphOne = () => {
     const navigate = useNavigate();
+    const [countries, setCountries] = useState([]);
+    const [selectedCountry, setSelectedCountry] = useState('');
 
-    const handleGenerateGraph = () => {
-        navigate('/FinalGenerateGraph');
+    useEffect(() => {
+        const fetchCountries = async () => {
+            try {
+                const response = await fetch("http://localhost:8080/countries");
+                if (!response.ok) {
+                    throw new Error('Failed to get countries');
+                }
+                const countriesArray = await response.json();
+                console.log('Countries Array:', countriesArray); // log the fetched data
+                setCountries(countriesArray); // update the state with fetched countries
+            } catch (error) {
+                console.error('error', error);
+            }
+        };
+        fetchCountries();
+    }, []);
+
+    const handleGenerateGraph = async () => {
+        try {
+            // generating graph page
+            navigate('/FinalGenerateGraph');
+        } catch (error) {
+            console.error('error:', error);
+        }
+    };
+
+    const handleCountryChange = (event) => {
+        setSelectedCountry(event.target.value);
     };
 
     return (
@@ -16,13 +44,13 @@ const GraphOne = () => {
                     <div className="col">
                         <div className="input-group mb-3">
                             <div className="input-group-prepend">
-                                <label className="input-group-text" htmlFor="countySelect" style={{ width: '200px', fontSize: '1rem' }}>Select County:</label>
+                                <label className="input-group-text" htmlFor="countySelect" style={{ width: '200px', fontSize: '1rem' }}>Select Country:</label>
                             </div>
-                            <select className="custom-select" id="countySelect" style={{ width: '250px' }}>
-                                <option selected>Select a county</option>
-                                <option value="county1">County 1</option>
-                                <option value="county2">County 2</option>
-                                <option value="county3">County 3</option>
+                            <select className="custom-select" id="countySelect" style={{ width: '250px' }} onChange={handleCountryChange} value={selectedCountry}>
+                                <option value="">Select a country</option>
+                                    {countries.length > 0 && countries.map((country, index) => (
+                                        <option key={index} value={country}>{country}</option>
+                                ))}
                             </select>
                         </div>
                     </div>
