@@ -5,9 +5,10 @@ const { exec } = require('child_process');
 const { stderr } = require('process');
 const { error } = require('console');
 const path = require('path')
+const cors = require('cors')
 app.use(morgan('tiny'));
 const fs = require('fs/promises')
-
+app.use(cors())
 app.get("/health",function(req,res){
     res.status(200)
     res.send({"message" : "Healthy!"})
