@@ -13,9 +13,9 @@ const GraphOne = () => {
                 if (!response.ok) {
                     throw new Error('Failed to get countries');
                 }
-                const countriesArray = await response.json();
-                console.log('Countries Array:', countriesArray); // log the fetched data
-                setCountries(countriesArray); // update the state with fetched countries
+                const { Countries } = await response.json();
+                console.log('Countries Array:', Countries); // log the fetched data
+                setCountries(Countries); // update with fetched countries
             } catch (error) {
                 console.error('error', error);
             }
@@ -48,8 +48,8 @@ const GraphOne = () => {
                             </div>
                             <select className="custom-select" id="countySelect" style={{ width: '250px' }} onChange={handleCountryChange} value={selectedCountry}>
                                 <option value="">Select a country</option>
-                                    {countries.length > 0 && countries.map((country, index) => (
-                                        <option key={index} value={country}>{country}</option>
+                                {countries.length > 0 && countries.map((country, index) => (
+                                    <option key={index} value={country}>{country}</option>
                                 ))}
                             </select>
                         </div>
