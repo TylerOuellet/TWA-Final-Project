@@ -16,13 +16,17 @@ app.get("/health",function(req,res){
 //CALL THE FUNCTION IN THE PYTHON SCRIPT DON'T FORGET
 app.get("/countries", function(req,res){
     const countryScript = exec('python ./scripts/return_countries.py', (err, stdout, stderr)=>{
-        output = `${stdout}`
+        let output = `${stdout}`
         if(err){
             console.log(`Error in script: ${stdout}`)
             res.status(500)
             return
         }
         output = `${stdout.trim()}`
+        output = output.replace('[','').replace(']','').replace(/^'|'$/g, '')
+        console.log('output: ', output);
+        output = output.split("', '")
+
         res.status(200)
         res.send({"Countries" : output})
     })
