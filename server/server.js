@@ -35,7 +35,7 @@ app.get("/countries", function(req,res){
 
 //This is graph 1
 app.get("/lineEnergyConsumption", async function(req,res){
-    inputCountry = req.query.country
+    const inputCountry = req.query.country
     //let availableCountries =[]
     if (!inputCountry){
         res.status(400)
@@ -62,9 +62,63 @@ app.get("/lineEnergyConsumption", async function(req,res){
 
 //This is graph 2
 app.get("/sustainablePieCharts", function(req, res){
-    res.status(200)
-    //placeholder image 
-    res.sendFile(__dirname + "/images/testimage.png")
+    const year = req.query.year
+    let countries = req.query.countries
+
+    if (!year || !countries){
+        res.status(400)
+        res.send({"message" : "no year or country"})
+        return
+    }
+    if(countries.split(",").length >= 5){
+        console.log('countries.split(",").length: ', countries.split(",").length);
+
+        res.status(400)
+        res.send({"message" : "too many countries"})
+        return
+    }
+    countries = countries.split(",").join(" ")
+    console.log('countries: ', countries);
+    const graphingScript = exec(`python ./scripts/second_graph.py ${year} ${countries}`, (err, stdout, stderr)=>{
+        console.log('`python ./scripts/second.py ${year} ${countries}`: ', `python ./scripts/second.py ${year} ${countries}`);
+        output = `${stdout}`
+        if(err){
+            console.log(`Error in script: ${stdout}`)
+            res.status(400)
+            res.send({"message" : "Country not available or not a valid country"})
+            return
+        }
+        res.status(200)
+        res.sendFile(__dirname + "/output/second_graph.png")
+        fs.rm("./output/second_graph.png")
+    })
+
+
+})
+
+app.get("/oilProductionBar", function (req,res){
+    const country1 = req.query.country1
+    const country2 = req.query.country2
+    const year = req.query.year
+    //let availableCountries =[]
+    if (!country1 || !country2 || !year){
+        res.status(400)
+        res.send({"Message: " : "No country 1, 2 and or year param"})
+        return
+    }
+
+    const graphingScript = exec(`python ./scripts/fourth_graph.py ${country1} ${country2} ${year}`, (err, stdout, stderr)=>{
+        output = `${stdout}`
+        if(err){
+            console.log(`Error in script: ${stdout}`)
+            res.status(400)
+            res.send({"message" : "Country not available or not a valid country"})
+            return
+        }
+        res.status(200)
+        res.sendFile(__dirname + "/output/fourth_graph.png")
+        fs.rm("./output/fourth_graph.png")
+    })
 })
 app.get("/pythonTest",async function(req,res){
     const testParam = "TESTPARAMETER"
