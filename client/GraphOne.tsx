@@ -11,11 +11,10 @@ const GraphOne = () => {
             try {
                 const response = await fetch("http://localhost:8080/countries");
                 if (!response.ok) {
-                    throw new Error('Failed to get countries');
+                    throw new Error('failed to get countries');
                 }
                 const { Countries } = await response.json();
-                console.log('Countries Array:', Countries); // log the fetched data
-                setCountries(Countries); // update with fetched countries
+                setCountries(Countries);
             } catch (error) {
                 console.error('error', error);
             }
@@ -25,10 +24,12 @@ const GraphOne = () => {
 
     const handleGenerateGraph = async () => {
         try {
-            // generating graph page
-            navigate('/FinalGenerateGraph');
+            if (!selectedCountry) {
+                throw new Error('please select a country');
+            }
+            navigate(`/FinalGenerateGraph/${selectedCountry}`);
         } catch (error) {
-            console.error('error:', error);
+            console.error('error', error);
         }
     };
 
@@ -37,17 +38,17 @@ const GraphOne = () => {
     };
 
     return (
-        <div className="container justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
+        <div className="container justify-content-center">
             <div>
-                <h2 className="text-center mb-4">Pick Data to Generate a Line Graph</h2>
-                <div className="row">
+                <h2 className="text-center">Pick Data to Generate a Line Graph</h2>
+                <div className="row mt-4">
                     <div className="col">
-                        <div className="input-group mb-3">
+                        <div className="input-group mb-6">
                             <div className="input-group-prepend">
-                                <label className="input-group-text" htmlFor="countySelect" style={{ width: '200px', fontSize: '1rem' }}>Select Country:</label>
+                                <label className="input-group-text" htmlFor="countySelect" style={{ width: '300px', fontSize: '1rem' }}>Select one of the following Country:</label>
                             </div>
-                            <select className="custom-select" id="countySelect" style={{ width: '250px' }} onChange={handleCountryChange} value={selectedCountry}>
-                                <option value="">Select a country</option>
+                            <select className="custom-select" id="countySelect" style={{ width: '700px' }} onChange={handleCountryChange} value={selectedCountry}>
+                                <option value="">Select</option>
                                 {countries.length > 0 && countries.map((country, index) => (
                                     <option key={index} value={country}>{country}</option>
                                 ))}

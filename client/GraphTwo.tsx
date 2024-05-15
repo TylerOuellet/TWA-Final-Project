@@ -9,7 +9,7 @@ const GraphTwo = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container align-items-center">
             <h2 className="text-center mb-4">Pick Data to Generate a Pie Graph</h2>
             <div className="row">
                 <div className="col">
