@@ -19,8 +19,9 @@ app.get("/countries", function(req,res){
     const countryScript = exec('python ./scripts/return_countries.py', (err, stdout, stderr)=>{
         let output = `${stdout}`
         if(err){
-            console.log(`Error in script: ${stdout}`)
+            console.log(`Error in script: ${stderr}`)
             res.status(500)
+            res.send({error : "Something went wrong getting countries"})
             return
         }
         output = `${stdout.trim()}`
@@ -43,22 +44,39 @@ app.get("/lineEnergyConsumption", async function(req,res){
         return
     }
 
-    const countryScript = exec(`python ./scripts/first_graph.py ${inputCountry}`, (err, stdout, stderr)=>{
+    const countryScript = exec(`python ./scripts/first_graph.py ${inputCountry}`, async (err, stdout, stderr)=>{
         output = `${stdout}`
         if(err){
             console.log(`Error in script: ${stdout}`)
-            res.status(400)
-            res.send({"message" : "Country not available or not a valid country"})
+            res.status(500)
+            res.send({"message" : "Script Failed!"})
             return
         }
-        res.status(200)
-        res.sendFile(__dirname + "/output/g1.png")
-        fs.rm("./output/g1.png")
+        const filepath = __dirname + "/output/first_graph.png"
+        try{
+            await fs.access(filepath)
+            res.status(200)
+            res.sendFile(filepath, async (err) => {
+                if (err) {
+                    console.log('Error sending file:', err);
+                    res.status(500)
+                    res.send({error: "server messed up"});
+                    return
+                }
+                try {
+                    await fs.rm(filepath);
+                } catch (error) {
+                    console.log('error: ', error);  
+                }
+            })   
+        }catch(error){
+            console.log('File does not exist:', error);
+            res.status(404)
+            res.send({error: "There may be no data for the supplied country"});
+        }
     })
-    
-
-
 })
+
 
 //This is graph 2
 app.get("/sustainablePieCharts", function(req, res){
@@ -79,23 +97,52 @@ app.get("/sustainablePieCharts", function(req, res){
     }
     countries = countries.split(",").join(" ")
     console.log('countries: ', countries);
-    const graphingScript = exec(`python ./scripts/second_graph.py ${year} ${countries}`, (err, stdout, stderr)=>{
+    const graphingScript = exec(`python ./scripts/second_graph.py ${year} ${countries}`, async (err, stdout, stderr)=>{
         console.log('`python ./scripts/second.py ${year} ${countries}`: ', `python ./scripts/second.py ${year} ${countries}`);
-        output = `${stdout}`
         if(err){
-            console.log(`Error in script: ${stdout}`)
-            res.status(400)
-            res.send({"message" : "Country not available or not a valid country"})
+            console.log(`Error in script: ${stderr}`)
+            res.status(500)
+            res.send({"message" : "Script Error!"})
             return
         }
-        res.status(200)
-        res.sendFile(__dirname + "/output/second_graph.png")
-        fs.rm("./output/second_graph.png")
+        const filepath = __dirname + "/output/second_graph.png"
+        try{
+            await fs.access(filepath)
+            res.status(200)
+            res.sendFile(filepath, async (err) => {
+                if (err) {
+                    console.log('Error sending file:', err);
+                    res.status(500)
+                    res.send({error: "server messed up"});
+                    return
+                }
+                try {
+                    await fs.rm(filepath);
+                } catch (error) {
+                    console.log('error: ', error);  
+                }
+            })   
+        }catch(error){
+            console.log('File does not exist:', error);
+            res.status(404)
+            res.send({error: "There may be no data for the supplied country"});
+        }
     })
+})
+app.get("/barCountryComparison", function (req, res){
+    const type = req.query.type
+    console.log('type: ', type);
+    if(type !== "gdp" && type !== "greenhouse_gas_emissions" && type !== "population"){
+        res.status(400)
+        res.send({message : "Type must be gdp, greenhouse_gas_emissions or population"})
+        return
+    }
 
-
+    console.log("Parameter Achnolaged: ", type)
+    res.sendFile(__dirname + "/images/testimage.png")
 })
 
+//graph 4
 app.get("/oilProductionBar", function (req,res){
     const country1 = req.query.country1
     const country2 = req.query.country2
@@ -107,17 +154,36 @@ app.get("/oilProductionBar", function (req,res){
         return
     }
 
-    const graphingScript = exec(`python ./scripts/fourth_graph.py ${country1} ${country2} ${year}`, (err, stdout, stderr)=>{
+    const graphingScript = exec(`python ./scripts/fourth_graph.py ${country1} ${country2} ${year}`, async (err, stdout, stderr)=>{
         output = `${stdout}`
         if(err){
-            console.log(`Error in script: ${stdout}`)
-            res.status(400)
-            res.send({"message" : "Country not available or not a valid country"})
+            console.log(`Error in script: ${stderr}`)
+            res.status(500)
+            res.send({"message" : "Script error: params may be bad"})
             return
         }
-        res.status(200)
-        res.sendFile(__dirname + "/output/fourth_graph.png")
-        fs.rm("./output/fourth_graph.png")
+        const filepath = __dirname + "/output/fourth_graph.png"
+        try{
+            await fs.access(filepath)
+            res.status(200)
+            res.sendFile(filepath, async (err) => {
+                if (err) {
+                    console.log('Error sending file:', err);
+                    res.status(500)
+                    res.send({error: "server messed up"});
+                    return
+                }
+                try {
+                    await fs.rm(filepath);
+                } catch (error) {
+                    console.log('error: ', error);  
+                }
+            })   
+        }catch(error){
+            console.log('File does not exist:', error);
+            res.status(404)
+            res.send({error: "country may not have data"});
+        }
     })
 })
 app.get("/pythonTest",async function(req,res){
