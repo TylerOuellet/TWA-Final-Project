@@ -12,10 +12,10 @@ db = client['project']
 collection = db['test']
 
 def return_countries():
-    countries_cursor = collection.distinct("country")
+    countries_cursor = collection.distinct("iso_code")
     countries_list = list(countries_cursor)
     print('countries_list: ', countries_list)
-    #df = pd.DataFrame(countries_list, columns=["country"])
-    #print('df: ', df)
-    #return df
+    # df = pd.DataFrame(countries_list, columns=["iso_code"])
+    # print('df: ', df)
+    # return df
 return_countries()
