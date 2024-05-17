@@ -2,12 +2,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
 # MongoDB connection setup
-cluster_uri = "mongodb+srv://tylerouellet93:YmataxFAcXo3GqlW@cluster0.9xoenc5.mongodb.net/"
-client = MongoClient(cluster_uri)
-db = client['project']
-collection = db['test']
+load_dotenv()
+cluster_uri = os.getenv("DB_CONNECTION")
+try:
+    client = MongoClient(cluster_uri)
+    db = client['project']
+    collection = db['test']
+except ConnectionError as err:
+    #Error given to server
+    print(f"Error connecting to MongoDB: {err}", file=sys.stderr)
+    sys.exit(1)
 
 def compare_oil_consumption(iso_code1, iso_code2, year):
     # Retrieve the country names using the ISO codes

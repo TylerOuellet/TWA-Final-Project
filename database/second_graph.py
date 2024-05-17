@@ -2,12 +2,21 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sys
 from pymongo import MongoClient
+import os
+from dotenv import load_dotenv
 
 # MongoDB connection setup
-cluster_uri = "mongodb+srv://tylerouellet93:YmataxFAcXo3GqlW@cluster0.9xoenc5.mongodb.net/"
-client = MongoClient(cluster_uri)
-db = client['project']
-collection = db['test']
+load_dotenv()
+cluster_uri = os.getenv("DB_CONNECTION")
+
+try:
+    client = MongoClient(cluster_uri)
+    db = client['project']
+    collection = db['test']
+except ConnectionError as err:
+     #Error given to server
+    print(f"Error connecting to MongoDB: {err}", file=sys.stderr)
+    sys.exit(1)
 
 def pie_charts(year, *iso_codes):
     fig, axs = plt.subplots(2, 2, figsize=(10, 10))
