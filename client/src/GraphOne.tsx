@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const GraphOne = () => {
     const navigate = useNavigate();
@@ -28,17 +30,25 @@ const GraphOne = () => {
                 throw new Error('please select a country');
             }
             navigate(`/FinalGenerateGraph/${selectedCountry}`);
-        } catch (error) {
+        } catch (error: any) {
             console.error('error', error);
+            toast.error("You must Select a Country in order to Generate the Graph"); // toast
         }
     };
 
-    const handleCountryChange = (event) => {
+    const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedCountry(event.target.value);
     };
 
     return (
         <div className="container justify-content-center">
+            <div className="row">
+                <div className="col-md-6">
+                </div>
+                <div className="col-md-6 d-flex justify-content-end align-items-center">
+                    <button type="button" className="btn btn-warning mt-2" onClick={() => navigate('/Part2')}>Back</button>
+                </div>
+            </div>
             <div>
                 <h2 className="text-center">Pick Data to Generate a Line Graph</h2>
                 <div className="row mt-4">
@@ -62,6 +72,7 @@ const GraphOne = () => {
                     </div>
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 };

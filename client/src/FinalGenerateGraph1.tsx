@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const FinalGenerateGraph = () => {
+const FinalGenerateGraph1 = () => {
+    const navigate = useNavigate();
+
     const { selectedCountry } = useParams();
     const [graphUrl, setGraphUrl] = useState('');
 
@@ -9,7 +12,7 @@ const FinalGenerateGraph = () => {
         const fetchGraph = async () => {
             try {
                 if (!selectedCountry) {
-                    throw new Error('No country was selected');
+                    throw new Error('No country selected');
                 }
                 const response = await fetch(`http://localhost:8080/lineEnergyConsumption?country=${selectedCountry}`);
                 if (!response.ok) {
@@ -35,8 +38,15 @@ const FinalGenerateGraph = () => {
     };
 
     return (
-        <div className="container">
-            <h2 className="text-center">The Generated Graph for {selectedCountry}</h2>
+        <div className="container text-center">
+            <div className="row">
+                <div className="col-md-6">
+                </div>
+                <div className="col-md-6 d-flex justify-content-end align-items-center">
+                    <button type="button" className="btn btn-warning mt-2" onClick={() => navigate('/ViewGraph1')}>Back</button>
+                </div>
+            </div>
+            <h2 className="text-center">The Generated Line Graph for {selectedCountry}</h2>
             {graphUrl && <img src={graphUrl} alt="Graph" className="img-thumbnail" />}
             <div className="text-center mt-4">
                 <button className="btn btn-secondary" onClick={downloadGraph}>Download Graph</button>
@@ -45,4 +55,4 @@ const FinalGenerateGraph = () => {
     );
 };
 
-export default FinalGenerateGraph;
+export default FinalGenerateGraph1;

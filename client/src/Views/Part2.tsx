@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
+//import { useEffect } from 'react';
+//import React from 'react'
+//import { useNavigate } from 'react-router-dom';
 import GraphSelection from '../GraphSelection';
 
 function Part2() {

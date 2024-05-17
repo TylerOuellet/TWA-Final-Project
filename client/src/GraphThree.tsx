@@ -5,7 +5,7 @@ const GraphThree = () => {
     const navigate = useNavigate();
     const [selectedOption, setSelectedOption] = useState('');
 
-    const handleCheckboxChange = (e) => {
+    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSelectedOption(e.target.value);
     };
 
@@ -15,6 +15,13 @@ const GraphThree = () => {
 
     return (
         <div className="container">
+            <div className="row">
+                <div className="col-md-6">
+                </div>
+                <div className="col-md-6 d-flex justify-content-end align-items-center">
+                    <button type="button" className="btn btn-warning mt-2" onClick={() => navigate('/Part2')}>Back</button>
+                </div>
+            </div>
             <h2 className="text-center mb-4">Pick Data to Generate a Bar Graph</h2>
             <div className="row">
                 <div className="col">

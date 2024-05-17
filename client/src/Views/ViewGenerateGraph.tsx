@@ -1,7 +1,7 @@
-import { useEffect } from 'react';
-import React from 'react'
-import { useNavigate } from 'react-router-dom';
-import GraphSelection from '../GraphSelection';
+//import { useEffect } from 'react';
+//import React from 'react'
+//import { useNavigate } from 'react-router-dom';
+//import GraphSelection from '../GraphSelection';
 import GraphOne from '../GraphOne';
 import GraphTwo from '../GraphTwo';
 import GraphThree from '../GraphThree';
