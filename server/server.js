@@ -129,6 +129,8 @@ app.get("/sustainablePieCharts", function(req, res){
         }
     })
 })
+
+//this is graph3
 app.get("/barCountryComparison", function (req, res){
     const type = req.query.type
     console.log('type: ', type);
@@ -137,9 +139,36 @@ app.get("/barCountryComparison", function (req, res){
         res.send({message : "Type must be gdp, greenhouse_gas_emissions or population"})
         return
     }
-
-    console.log("Parameter Achnolaged: ", type)
-    res.sendFile(__dirname + "/images/testimage.png")
+    const graphingScript = exec(`python ./scripts/third_graph.py ${type}`, async (err, stdout, stderr)=>{
+        if(err){
+            console.log(`Error in script: ${stderr}`)
+            res.status(500)
+            res.send({"message" : "Script Error!"})
+            return
+        }
+        const filepath = __dirname + "/output/third_graph.png"
+        try{
+            await fs.access(filepath)
+            res.status(200)
+            res.sendFile(filepath, async (err) => {
+                if (err) {
+                    console.log('Error sending file:', err);
+                    res.status(500)
+                    res.send({error: "server messed up"});
+                    return
+                }
+                try {
+                    await fs.rm(filepath);
+                } catch (error) {
+                    console.log('error: ', error);  
+                }
+            })   
+        }catch(error){
+            console.log('File does not exist:', error);
+            res.status(500)
+            res.send({error: "Something went wrong..."});
+        }
+    })
 })
 
 //graph 4
