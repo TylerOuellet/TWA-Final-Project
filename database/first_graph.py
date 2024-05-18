@@ -18,8 +18,10 @@ except ConnectionError as err:
     sys.exit(1)
 
 def graph_according_to_iso_code(iso_code):
+    # Find country name from iso_code
     country_info = collection.find_one({"iso_code": iso_code}, {"country": 1, "_id": 0})
 
+    # if country is not found
     if not country_info:
         print(f"No country found for ISO code {iso_code}.")
         return
@@ -39,13 +41,16 @@ def graph_according_to_iso_code(iso_code):
 
     df = pd.DataFrame(list(cursor))
 
+    # if no data is empty
     if df.empty:
         print(f"No data found for {iso_code}.")
         return
 
+    # if some consumption data is missing
     if df[['oil_consumption', 'gas_consumption', 'coal_consumption']].isna().any().any():
         print(f"Some consumption data is missing for {iso_code}.")
-        
+    
+    # plotting
     plt.figure(figsize=(10, 6))
     plt.plot(df['year'], df['oil_consumption'], label='Oil', linestyle='-', color='orange')
     plt.plot(df['year'], df['gas_consumption'], label='Gas', linestyle='-', color='green')
@@ -56,9 +61,9 @@ def graph_according_to_iso_code(iso_code):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(f"../server/output/first_graph.png")
+    plt.savefig(f"../server/output/first_graph.png")
 
+# if arg is not present or is wrong
 if len(sys.argv) < 2:
     print("Usage: python script.py <iso_code>")
     sys.exit(1)

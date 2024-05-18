@@ -19,6 +19,7 @@ except ConnectionError as err:
     sys.exit(1)
 
 def pie_charts(year, *iso_codes):
+
     fig, axs = plt.subplots(2, 2, figsize=(10, 10))
     
     file_name = "second_graph.png"
@@ -52,26 +53,26 @@ def pie_charts(year, *iso_codes):
             if any(pd.isna(data)):
                 print(f"Some consumption data is missing for {country_name} ({iso_code})")
                 continue
-            
+            # graph
             ax.pie(data, autopct='%1.1f%%', explode=explode)
             ax.set_title(f"{country_name}")
         else:
             print(f"No data for {country_name} ({iso_code})")
     
-    # If fewer than 4 countries, hide the remaining subplots
+    # if fewer than 4 countries hide remaining subplots
     if len(iso_codes) < 4:
         for j in range(len(iso_codes), 4):
             axs[j].axis('off')
 
-    # Adding a legend
+    # adding a legend
     legend_labels = ["Biofuel", "Hydro", "Solar", "Wind"]
     fig.legend(legend_labels, title="Energy Types", loc="upper right")
     
     fig.suptitle(f"Sustainable Energy Consumption Distribution by Country ({year})", fontsize=15)
     plt.tight_layout()
-    plt.show()
-    #plt.savefig(f"../server/output/{file_name}")
+    plt.savefig(f"../server/output/{file_name}")
 
+# if arg is not present or is wrong
 if __name__ == "__main__":
     if len(sys.argv) < 3:
         print("Usage: python script.py year iso_code1 [iso_code2 ...]")
