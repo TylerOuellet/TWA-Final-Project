@@ -17,8 +17,9 @@ except ConnectionError as err:
     print(f"Error connecting to MongoDB: {err}", file=sys.stderr)
     sys.exit(1)
 
+# compare oil production of two countries in a given year.
 def compare_oil_consumption(iso_code1, iso_code2, year):
-    # Retrieve the country names using the ISO codes
+    # retrieve country names using iso codes
     country_info1 = collection.find_one({"iso_code": iso_code1}, {"country": 1, "_id": 0})
     country_info2 = collection.find_one({"iso_code": iso_code2}, {"country": 1, "_id": 0})
 
@@ -43,7 +44,8 @@ def compare_oil_consumption(iso_code1, iso_code2, year):
     if df.empty or 'oil_production' not in df.columns or df['oil_production'].isnull().any():
         print(f"Some or all oil production data is missing for {country_name1} or {country_name2} in {year}.")
         return
-
+    
+    # graph
     plt.figure(figsize=(10, 6))
     plt.bar(df['iso_code'], df['oil_production'], color=['blue', 'green'])
     plt.title(f'Comparison of Oil Production between {country_name1} and {country_name2} in {year}')
@@ -54,6 +56,7 @@ def compare_oil_consumption(iso_code1, iso_code2, year):
     plt.show()
     # plt.savefig(f"../server/output/{file_name}")
 
+# if args is missing or is wrong
 if len(sys.argv) != 4:
     print("Usage: python script.py <iso_code1> <iso_code2> <year>")
     sys.exit(1)

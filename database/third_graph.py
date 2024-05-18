@@ -18,15 +18,18 @@ except ConnectionError as err:
     print(f"Error connecting to MongoDB: {err}", file=sys.stderr)
     sys.exit(1)
 
+# retreive country name associated with iso code
 def get_country_name(iso_code):
     country_info = collection.find_one({"iso_code": iso_code}, {"country": 1, "_id": 0})
     return country_info["country"] if country_info else iso_code
 
+# fetch data from collection base on choice
 def fetch_data(choice):
     query = {"year": {"$gte": 2011, "$lte": 2020}}
     projection = {"iso_code": 1, choice: 1, "_id": 0, "year": 1}
     return list(collection.find(query, projection))
 
+# generate data frame
 def prepare_data(cursor, choice):
     df = pd.DataFrame(cursor)
     df = df[df['year'] >= 2011]
@@ -47,6 +50,7 @@ def prepare_data(cursor, choice):
 
     return pd.concat(result)
 
+# plot the data
 def plot_data(final_df, choice):
     plt.figure(figsize=(12, 6))
 
@@ -68,11 +72,13 @@ def plot_data(final_df, choice):
     plt.tight_layout()
     plt.show()
 
+# exec main function
 def main(choice):
     cursor = fetch_data(choice)
     final_df = prepare_data(cursor, choice)
     plot_data(final_df, choice)
 
+# if arg is missing or is wrong
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print("Usage: python script.py <choice>")
