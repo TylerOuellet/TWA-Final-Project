@@ -11,7 +11,7 @@ const GraphOne = () => {
     useEffect(() => {
         const fetchCountries = async () => {
             try {
-                const response = await fetch("http://localhost:8080/countries");
+                const response = await fetch("/countries");
                 if (!response.ok) { // is not ok 
                     throw new Error('failed to get countries');
                 }

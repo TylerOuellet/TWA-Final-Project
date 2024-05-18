@@ -56,7 +56,7 @@ def graph_according_to_iso_code(iso_code):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    plt.savefig(f"../server/output/first_graph.png")
+    plt.savefig(f"./output/first_graph.png")
 
 if len(sys.argv) < 2:
     print("Usage: python script.py <iso_code>")

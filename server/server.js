@@ -8,15 +8,18 @@ const path = require('path')
 const cors = require('cors')
 app.use(morgan('tiny'));
 const fs = require('fs/promises')
-app.use(cors())
+app.use(cors({
+    origin:'http://twa-dbfinalproject-env.eba-xi3z89mr.us-east-1.elasticbeanstalk.com/'
+}))
 app.get("/health",function(req,res){
     res.status(200)
     res.send({"message" : "Healthy!"})
 })
+app.use('/', express.static(path.join(__dirname, 'dist')))
 //Gets a list of countries
 //CALL THE FUNCTION IN THE PYTHON SCRIPT DON'T FORGET
 app.get("/countries", function(req,res){
-    const countryScript = exec('python ./scripts/return_countries.py', (err, stdout, stderr)=>{
+    const countryScript = exec('python3 ./scripts/return_countries.py', (err, stdout, stderr)=>{
         let output = `${stdout}`
         if(err){
             console.log(`Error in script: ${stderr}`)
@@ -44,7 +47,7 @@ app.get("/lineEnergyConsumption", async function(req,res){
         return
     }
 
-    const countryScript = exec(`python ./scripts/first_graph.py ${inputCountry}`, async (err, stdout, stderr)=>{
+    const countryScript = exec(`python3 ./scripts/first_graph.py ${inputCountry}`, async (err, stdout, stderr)=>{
         output = `${stdout}`
         if(err){
             console.log(`Error in script: ${stdout}`)
@@ -97,7 +100,7 @@ app.get("/sustainablePieCharts", function(req, res){
     }
     countries = countries.split(",").join(" ")
     console.log('countries: ', countries);
-    const graphingScript = exec(`python ./scripts/second_graph.py ${year} ${countries}`, async (err, stdout, stderr)=>{
+    const graphingScript = exec(`python3 ./scripts/second_graph.py ${year} ${countries}`, async (err, stdout, stderr)=>{
         console.log('`python ./scripts/second.py ${year} ${countries}`: ', `python ./scripts/second.py ${year} ${countries}`);
         if(err){
             console.log(`Error in script: ${stderr}`)
@@ -139,7 +142,7 @@ app.get("/barCountryComparison", function (req, res){
         res.send({message : "Type must be gdp, greenhouse_gas_emissions or population"})
         return
     }
-    const graphingScript = exec(`python ./scripts/third_graph.py ${type}`, async (err, stdout, stderr)=>{
+    const graphingScript = exec(`python3 ./scripts/third_graph.py ${type}`, async (err, stdout, stderr)=>{
         if(err){
             console.log(`Error in script: ${stderr}`)
             res.status(500)
@@ -183,7 +186,7 @@ app.get("/oilProductionBar", function (req,res){
         return
     }
 
-    const graphingScript = exec(`python ./scripts/fourth_graph.py ${country1} ${country2} ${year}`, async (err, stdout, stderr)=>{
+    const graphingScript = exec(`python3 ./scripts/fourth_graph.py ${country1} ${country2} ${year}`, async (err, stdout, stderr)=>{
         output = `${stdout}`
         if(err){
             console.log(`Error in script: ${stderr}`)
@@ -217,7 +220,7 @@ app.get("/oilProductionBar", function (req,res){
 })
 app.get("/pythonTest",async function(req,res){
     const testParam = "TESTPARAMETER"
-    const pythonTest = exec(`python pythonTest.py ${testParam}`, (error, stdout, stderr)=>{
+    const pythonTest = exec(`python3 pythonTest.py ${testParam}`, (error, stdout, stderr)=>{
         if(error){
             console.log(`Error in python script: ${stdout}`)
             res.status(500)

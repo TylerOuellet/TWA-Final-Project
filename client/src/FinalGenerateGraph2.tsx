@@ -21,7 +21,7 @@ const FinalGenerateGraph = () => {
                 }
                 // encode the country names for url
                 const encodedCountries = selectedCountries.map(country => encodeURIComponent(country));
-                const url = `http://localhost:8080/sustainablePieCharts?year=${year}&countries=${encodedCountries.join(',')}`;
+                const url = `/sustainablePieCharts?year=${year}&countries=${encodedCountries.join(',')}`;
                 const response = await fetch(url); // graph from api
                 if (!response.ok) {
                     throw new Error('not able to get the graph');

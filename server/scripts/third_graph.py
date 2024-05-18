@@ -67,7 +67,7 @@ def plot_data(final_df, choice):
     plt.legend(loc='upper left', bbox_to_anchor=(.01,1.01))
     plt.tight_layout()
     file_name = "third_graph"
-    plt.savefig(f"../server/output/{file_name}")
+    plt.savefig(f"./output/{file_name}")
 
 def main(choice):
     cursor = fetch_data(choice)

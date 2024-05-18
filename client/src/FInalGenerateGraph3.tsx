@@ -16,7 +16,7 @@ const FinalGenerateGraph3: React.FC = () => {
                     throw new Error('Missing type parameter');
                 }
 
-                const url = `http://localhost:8080/barCountryComparison?type=${type}`;
+                const url = `/barCountryComparison?type=${type}`;
                 const response = await fetch(url); // fetch graph data from api
                 if (!response.ok) {
                     throw new Error('faild to get the graph');

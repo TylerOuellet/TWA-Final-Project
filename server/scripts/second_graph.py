@@ -68,7 +68,7 @@ def pie_charts(year, *iso_codes):
     
     fig.suptitle(f"Sustainable Energy Consumption Distribution by Country ({year})", fontsize=15)
     plt.tight_layout()
-    plt.savefig(f"../server/output/{file_name}")
+    plt.savefig(f"./output/{file_name}")
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:

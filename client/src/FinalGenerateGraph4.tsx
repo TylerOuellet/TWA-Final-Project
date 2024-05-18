@@ -14,7 +14,7 @@ const FinalGenerateGraph4 = () => {
                 if (!selectedCountry1 || !selectedCountry2 || !year) {
                     throw new Error('missing parameters');
                 }
-                const response = await fetch(`http://localhost:8080/oilProductionBar?country1=${selectedCountry1}&country2=${selectedCountry2}&year=${year}`);
+                const response = await fetch(`/oilProductionBar?country1=${selectedCountry1}&country2=${selectedCountry2}&year=${year}`);
                 if (!response.ok) {
                     throw new Error('notable to get the graph');
                 }

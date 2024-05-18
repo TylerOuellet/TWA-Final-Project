@@ -12,7 +12,7 @@ const GraphTwo: React.FC = () => {
     useEffect(() => {
         const fetchCountries = async () => {
             try {
-                const response = await fetch("http://localhost:8080/countries");
+                const response = await fetch("/countries");
                 if (!response.ok) { // 
                     throw new Error('failed to get countries');
                 }

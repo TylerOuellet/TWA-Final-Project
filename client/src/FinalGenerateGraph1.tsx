@@ -14,7 +14,7 @@ const FinalGenerateGraph1 = () => {
                 if (!selectedCountry) { // country provided 
                     throw new Error('No country selected');
                 }
-                const response = await fetch(`http://localhost:8080/lineEnergyConsumption?country=${selectedCountry}`);
+                const response = await fetch(`/lineEnergyConsumption?country=${selectedCountry}`);
                 if (!response.ok) {
                     throw new Error('unable to get the graph');
                 }

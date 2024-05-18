@@ -13,7 +13,7 @@ const GraphFour = () => {
     useEffect(() => {
         const fetchCountries = async () => {
             try {
-                const response = await fetch("http://localhost:8080/countries");
+                const response = await fetch("/countries");
                 if (!response.ok) throw new Error('cannot get countries');
                 const { Countries } = await response.json();
                 setCountries(Countries);

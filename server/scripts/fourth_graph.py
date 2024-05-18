@@ -50,7 +50,7 @@ def compare_oil_consumption(iso_code1, iso_code2, year):
     plt.ylabel('Oil Production')
     plt.grid(True)
     plt.tight_layout()
-    plt.savefig(f"../server/output/{file_name}")
+    plt.savefig(f"./output/{file_name}")
 
 if len(sys.argv) != 4:
     print("Usage: python script.py <iso_code1> <iso_code2> <year>")
