@@ -10,8 +10,8 @@ import ViewGraph3 from "./Views/ViewGraph3.tsx";
 import ViewGraph4 from "./Views/ViewGraph4.tsx";
 import FinalGenerateGraph1 from './FinalGenerateGraph1.tsx';
 import FinalGenerateGraph2 from './FinalGenerateGraph2.tsx';
+import FinalGenerateGraph3 from './FInalGenerateGraph3.tsx';
 import FinalGenerateGraph4 from './FinalGenerateGraph4.tsx';
-
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -25,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/ViewGraph4" element={<ViewGraph4 />} />
         <Route path="/FinalGenerateGraph/:selectedCountry" element={<FinalGenerateGraph1 />} />
         <Route path="/FinalGenerateGraph/pie/:year/:countries" element={<FinalGenerateGraph2 />} />
+        <Route path="/FinalGenerateGraph" element={<FinalGenerateGraph3 />} /> {/*  */}
         <Route path="/FinalGenerateGraph/bar/:selectedCountry1/:selectedCountry2/:year" element={<FinalGenerateGraph4 />} />
       </Routes>
     </Router>

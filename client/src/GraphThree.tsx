@@ -1,23 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-const GraphThree = () => {
+const GraphThree: React.FC = () => {
     const navigate = useNavigate();
-    const [selectedOption, setSelectedOption] = useState('');
+    const [selectedOption, setSelectedOption] = useState<string>('');
 
-    const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedOption(e.target.value);
     };
 
     const handleGenerateGraph = () => {
-        navigate('/FinalGenerateGraph');
+        if (selectedOption) {
+            navigate(`/FinalGenerateGraph?type=${selectedOption}`);
+        } else {
+            toast.error('Please select a type');
+        }
     };
 
     return (
         <div className="container">
             <div className="row">
-                <div className="col-md-6">
-                </div>
+                <div className="col-md-6"></div>
                 <div className="col-md-6 d-flex justify-content-end align-items-center">
                     <button type="button" className="btn btn-warning mt-2" onClick={() => navigate('/Part2')}>Back</button>
                 </div>
@@ -29,17 +34,20 @@ const GraphThree = () => {
                         <label className="list-group-item">
                             <input
                                 className="form-check-input me-1"
-                                type="checkbox"
-                                value="greenhouse"
-                                checked={selectedOption === 'greenhouse'}
+                                type="radio"
+                                name="dataOption"
+                                value="greenhouse_gas_emissions"
+                                checked={selectedOption === 'greenhouse_gas_emissions'}
                                 onChange={handleCheckboxChange}
                             />
+
                             Greenhouse
                         </label>
                         <label className="list-group-item">
                             <input
                                 className="form-check-input me-1"
-                                type="checkbox"
+                                type="radio"
+                                name="dataOption"
                                 value="gdp"
                                 checked={selectedOption === 'gdp'}
                                 onChange={handleCheckboxChange}
@@ -49,7 +57,8 @@ const GraphThree = () => {
                         <label className="list-group-item">
                             <input
                                 className="form-check-input me-1"
-                                type="checkbox"
+                                type="radio"
+                                name="dataOption"
                                 value="population"
                                 checked={selectedOption === 'population'}
                                 onChange={handleCheckboxChange}
@@ -60,8 +69,9 @@ const GraphThree = () => {
                 </div>
             </div>
             <div className="row mt-4">
-                <button type="button" className="btn btn-secondary text-center" onClick={handleGenerateGraph}>Generate Graph</button>
+                <button type="button" className="btn btn-secondary text-center mt-4" onClick={handleGenerateGraph}>Generate Graph</button>
             </div>
+            <ToastContainer />
         </div>
     );
 };
