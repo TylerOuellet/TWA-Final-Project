@@ -3,10 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import graphOne from './images/Australia_graph.png';
 import graphTwo from './images/Canada_Brazil_graph.png';
 import graphFour from './images/Algeria_Canada_graph.png';
-import barGraphImage from './images/barGraohExample.png';
+import graphThree from './images/GraphThree.png';
+
 
 const LandingPage = () => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); // navigation
 
     const navigateToGraph1 = () => {
         navigate('/ViewGraph1');
@@ -35,6 +36,7 @@ const LandingPage = () => {
             </div>
             <h2 className='text-center mt-2'>Possible Graphs</h2>
             <h5 className='text-center mb-3'>Pick one of the following graphs and our team will generate them for you</h5>
+            {/* 1 */}
             <div className="row">
                 <div className="col-md-6">
                     <div className="card">
@@ -45,6 +47,7 @@ const LandingPage = () => {
                         </div>
                     </div>
                 </div>
+                {/* 2 */}
                 <div className="col-md-6">
                     <div className="card">
                         <h2 className="card-text text-center">Generate Pie Graph Comparing Sustainable Energy Consumptions</h2>
@@ -55,16 +58,18 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
+            {/* 3 */}
             <div className="row">
                 <div className="col-md-6">
                     <div className="card">
-                        <h2 className="card-text text-center">Generate Bar Graph Comparing .....</h2>
-                        <img src={barGraphImage} className="card-img-top" alt="Line Graph Example" />
+                        <h2 className="card-text text-center">Generate Bar Graph ethier Comparing GDP, Population and Greenhouse gas emmissions</h2>
+                        <img src={graphThree} className="card-img-top" alt="Line Graph Example" />
                         <div className="card-body d-grid gap-2">
                             <a className="btn btn-warning text-center" onClick={navigateToGraph3}>Select Graph</a>
                         </div>
                     </div>
                 </div>
+                {/* 4 */}
                 <div className="col-md-6">
                     <div className="card">
                         <h2 className="card-text text-center">Generate Bar Graph Comparing Oil Production</h2>

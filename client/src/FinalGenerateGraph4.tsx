@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 
-const FinalGenerateGraph = () => {
+const FinalGenerateGraph4 = () => {
     const navigate = useNavigate();
 
     const { selectedCountry1, selectedCountry2, year } = useParams();
@@ -26,12 +26,12 @@ const FinalGenerateGraph = () => {
             }
         };
         fetchGraph();
-    }, [selectedCountry1, selectedCountry2, year]);
+    }, [selectedCountry1, selectedCountry2, year]); // run when selectedCountryssss and year changes 
 
     const downloadGraph = () => {
         const link = document.createElement('a');
         link.href = graphUrl;
-        link.download = `${selectedCountry1}_${selectedCountry2}_graph.png`;
+        link.download = `${selectedCountry1}_${selectedCountry2}_BarGraph.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
@@ -55,7 +55,7 @@ const FinalGenerateGraph = () => {
     );
 };
 
-export default FinalGenerateGraph;
+export default FinalGenerateGraph4;
 
 
 

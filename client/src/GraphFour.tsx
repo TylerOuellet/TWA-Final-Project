@@ -5,10 +5,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GraphFour = () => {
     const navigate = useNavigate();
-    const [countries, setCountries] = useState([]);
-    const [selectedCountry1, setSelectedCountry1] = useState('');
-    const [selectedCountry2, setSelectedCountry2] = useState('');
-    const [year, setYear] = useState('');
+    const [countries, setCountries] = useState([]); // country list
+    const [selectedCountry1, setSelectedCountry1] = useState(''); // first country 
+    const [selectedCountry2, setSelectedCountry2] = useState(''); // second country
+    const [year, setYear] = useState(''); // store countries 
 
     useEffect(() => {
         const fetchCountries = async () => {
@@ -25,7 +25,7 @@ const GraphFour = () => {
     }, []);
 
     const handleGenerateGraph = () => {
-        if (!selectedCountry1 || !selectedCountry2 || !year) {
+        if (!selectedCountry1 || !selectedCountry2 || !year) { // make sure countires selected and year
             console.error('error select two countries and a year');
             if (!selectedCountry1 || !selectedCountry2) {
                 toast.error("Please select two countries to Generate the Graph"); // t

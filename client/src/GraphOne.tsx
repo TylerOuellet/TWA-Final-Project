@@ -5,18 +5,18 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GraphOne = () => {
     const navigate = useNavigate();
-    const [countries, setCountries] = useState([]);
-    const [selectedCountry, setSelectedCountry] = useState('');
+    const [countries, setCountries] = useState([]); // store country list
+    const [selectedCountry, setSelectedCountry] = useState(''); // store selected country
 
     useEffect(() => {
         const fetchCountries = async () => {
             try {
                 const response = await fetch("http://localhost:8080/countries");
-                if (!response.ok) {
+                if (!response.ok) { // is not ok 
                     throw new Error('failed to get countries');
                 }
-                const { Countries } = await response.json();
-                setCountries(Countries);
+                const { Countries } = await response.json(); // parse json response 
+                setCountries(Countries); // update country with the data that is fetched 
             } catch (error) {
                 console.error('error', error);
             }
@@ -24,6 +24,7 @@ const GraphOne = () => {
         fetchCountries();
     }, []);
 
+    // generate graph 
     const handleGenerateGraph = async () => {
         try {
             if (!selectedCountry) {
@@ -36,8 +37,9 @@ const GraphOne = () => {
         }
     };
 
+    // handle if country selection changes
     const handleCountryChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedCountry(event.target.value);
+        setSelectedCountry(event.target.value); // this updates the country selected with selected value
     };
 
     return (
@@ -57,6 +59,7 @@ const GraphOne = () => {
                             <div className="input-group-prepend">
                                 <label className="input-group-text" htmlFor="countySelect" style={{ width: '300px', fontSize: '1rem' }}>Select one of the following Country:</label>
                             </div>
+                            {/*dropdown*/}
                             <select className="custom-select" id="countySelect" style={{ width: '700px' }} onChange={handleCountryChange} value={selectedCountry}>
                                 <option value="">Select</option>
                                 {countries.length > 0 && countries.map((country, index) => (

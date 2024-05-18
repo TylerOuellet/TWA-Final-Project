@@ -5,14 +5,15 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GraphThree: React.FC = () => {
     const navigate = useNavigate();
-    const [selectedOption, setSelectedOption] = useState<string>('');
+    const [selectedOption, setSelectedOption] = useState<string>(''); // state variable of selected option
 
     const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {
         setSelectedOption(e.target.value);
     };
 
+    // generate graph
     const handleGenerateGraph = () => {
-        if (selectedOption) {
+        if (selectedOption) { // make sure something is selected
             navigate(`/FinalGenerateGraph?type=${selectedOption}`);
         } else {
             toast.error('Please select a type');
@@ -30,6 +31,7 @@ const GraphThree: React.FC = () => {
             <h2 className="text-center mb-4">Pick Data to Generate a Bar Graph</h2>
             <div className="row">
                 <div className="col">
+                    {/*radio buttons */}
                     <div className="list-group">
                         <label className="list-group-item">
                             <input
@@ -39,9 +41,7 @@ const GraphThree: React.FC = () => {
                                 value="greenhouse_gas_emissions"
                                 checked={selectedOption === 'greenhouse_gas_emissions'}
                                 onChange={handleCheckboxChange}
-                            />
-
-                            Greenhouse
+                            /> Greenhouse
                         </label>
                         <label className="list-group-item">
                             <input
@@ -51,8 +51,7 @@ const GraphThree: React.FC = () => {
                                 value="gdp"
                                 checked={selectedOption === 'gdp'}
                                 onChange={handleCheckboxChange}
-                            />
-                            GDP
+                            /> GDP
                         </label>
                         <label className="list-group-item">
                             <input
@@ -62,8 +61,7 @@ const GraphThree: React.FC = () => {
                                 value="population"
                                 checked={selectedOption === 'population'}
                                 onChange={handleCheckboxChange}
-                            />
-                            Population
+                            /> Population
                         </label>
                     </div>
                 </div>

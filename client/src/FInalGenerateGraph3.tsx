@@ -3,9 +3,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 const FinalGenerateGraph3: React.FC = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const type = queryParams.get('type');
+    const location = useLocation(); // access url 
+    const queryParams = new URLSearchParams(location.search); // URLSearchParams object to parse query parameters
+    const type = queryParams.get('type'); // get type query parameter from url 
 
     const [graphUrl, setGraphUrl] = useState<string>('');
 
@@ -17,7 +17,7 @@ const FinalGenerateGraph3: React.FC = () => {
                 }
 
                 const url = `http://localhost:8080/barCountryComparison?type=${type}`;
-                const response = await fetch(url);
+                const response = await fetch(url); // fetch graph data from api
                 if (!response.ok) {
                     throw new Error('faild to get the graph');
                 }
@@ -30,12 +30,12 @@ const FinalGenerateGraph3: React.FC = () => {
         };
 
         fetchGraph();
-    }, [type]);
+    }, [type]); // run again when type changes
 
     const downloadGraph = () => {
         const link = document.createElement('a');
         link.href = graphUrl;
-        link.download = `${type}_graph.png`;
+        link.download = `${type}_BarGraph.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

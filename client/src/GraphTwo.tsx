@@ -5,16 +5,19 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const GraphTwo: React.FC = () => {
     const navigate = useNavigate();
-    const [countries, setCountries] = useState<string[]>([]);
-    const [selectedCountries, setSelectedCountries] = useState<string[]>([]);
-    const [year, setYear] = useState<string>('');
+    const [countries, setCountries] = useState<string[]>([]); // country list 
+    const [selectedCountries, setSelectedCountries] = useState<string[]>([]); // selected country
+    const [year, setYear] = useState<string>(''); // store year 
 
     useEffect(() => {
         const fetchCountries = async () => {
             try {
                 const response = await fetch("http://localhost:8080/countries");
-                if (!response.ok) throw new Error('failed to get countries');
-                const { Countries } = await response.json();
+                if (!response.ok) { // 
+                    throw new Error('failed to get countries');
+                }
+                const { Countries } = await response.json(); // pars json response 
+                // this updates countries state with the fetched data
                 setCountries(Countries || []);
             } catch (error) {
                 console.error('error', error);
@@ -23,30 +26,35 @@ const GraphTwo: React.FC = () => {
         fetchCountries();
     }, []);
 
+    // country selection 
     const handleSelectCountry = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const country = e.target.value;
+        const country = e.target.value; // gets selected country
         setSelectedCountries((prevSelected) => {
             if (prevSelected.includes(country)) {
+                // if country slected it removes for list 
                 return prevSelected.filter(c => c !== country);
             }
             if (prevSelected.length < 4) {
+                // if less of 4 c slected new country to list 
                 return [...prevSelected, country];
             }
+            // if 4 selected none added 
             return prevSelected;
         });
     };
 
     const handleGenerateGraph = () => {
-        if (selectedCountries.length === 0 || !year) {
+        if (selectedCountries.length === 0 || !year) { // make sure one country and year is selected
             console.error('select at least one country and year');
-            if (selectedCountries.length === 0) {
+            if (selectedCountries.length === 0) { // if no country slected 
                 toast.error("You must Select 1 to 4 Countries to Generate the Graph"); // toast
             }
-            if (!year) {
+            if (!year) { // if no year selected
                 toast.error("Please enter a Year to Generate the Graph"); // toast
             }
             return;
         }
+        // this encode the selected countries for URL
         const encodedCountries = selectedCountries.map(country => encodeURIComponent(country));
         navigate(`/FinalGenerateGraph/pie/${year}/${encodedCountries.join(',')}`);
     };

@@ -5,33 +5,34 @@ import { useNavigate } from 'react-router-dom';
 const FinalGenerateGraph1 = () => {
     const navigate = useNavigate();
 
-    const { selectedCountry } = useParams();
+    const { selectedCountry } = useParams(); // get selected country
     const [graphUrl, setGraphUrl] = useState('');
 
     useEffect(() => {
         const fetchGraph = async () => {
             try {
-                if (!selectedCountry) {
+                if (!selectedCountry) { // country provided 
                     throw new Error('No country selected');
                 }
                 const response = await fetch(`http://localhost:8080/lineEnergyConsumption?country=${selectedCountry}`);
                 if (!response.ok) {
                     throw new Error('unable to get the graph');
                 }
+                // response to blob
                 const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
-                setGraphUrl(url);
+                setGraphUrl(url); // update  url
             } catch (error) {
                 console.error('error', error);
             }
         };
         fetchGraph();
-    }, [selectedCountry]);
+    }, [selectedCountry]); // will run if the selected country changes 
 
     const downloadGraph = () => {
         const link = document.createElement('a');
         link.href = graphUrl;
-        link.download = `${selectedCountry}_graph.png`;
+        link.download = `${selectedCountry}_LineGraph.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

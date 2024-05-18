@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router-dom';
 const FinalGenerateGraph = () => {
     const navigate = useNavigate();
 
-    const { countries = '', year } = useParams(); // thedefault value for countries
-    const selectedCountries = countries.split(',');
+    const { countries = '', year } = useParams(); // thedefault value for countries, params extracts url parameters  
+    const selectedCountries = countries.split(','); // counties string to array
     const [graphUrl, setGraphUrl] = useState('');
 
     useEffect(() => {
@@ -19,27 +19,27 @@ const FinalGenerateGraph = () => {
                 if (selectedCountries.length < 1) {
                     throw new Error('at least one country selected');
                 }
+                // encode the country names for url
                 const encodedCountries = selectedCountries.map(country => encodeURIComponent(country));
                 const url = `http://localhost:8080/sustainablePieCharts?year=${year}&countries=${encodedCountries.join(',')}`;
-                const response = await fetch(url);
+                const response = await fetch(url); // graph from api
                 if (!response.ok) {
                     throw new Error('not able to get the graph');
                 }
                 const blob = await response.blob();
                 const graphUrl = URL.createObjectURL(blob);
-                setGraphUrl(graphUrl);
+                setGraphUrl(graphUrl); // update state with url of graph
             } catch (error) {
                 console.error('error', error);
             }
         };
-
         fetchGraph();
-    }, [selectedCountries, year]);
+    }, [selectedCountries, year]); // run when year or country selected changes 
 
     const downloadGraph = () => {
         const link = document.createElement('a');
         link.href = graphUrl;
-        link.download = `${selectedCountries.join('_')}_graph.png`;
+        link.download = `${selectedCountries.join('_')}_PieGraph.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
