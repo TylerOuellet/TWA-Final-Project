@@ -11,7 +11,7 @@ cluster_uri = os.getenv("DB_CONNECTION")
 try:
     client = MongoClient(cluster_uri)
     db = client['project']
-    collection = db['test']
+    collection = db['data']
 except ConnectionError as err:
     #Error given to server
     print(f"Error connecting to MongoDB: {err}", file=sys.stderr)
