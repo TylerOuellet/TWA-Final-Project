@@ -3,6 +3,7 @@ import sys
 from pymongo import MongoClient
 import os
 from dotenv import load_dotenv
+import numpy as np
 
 #Get environment var
 load_dotenv()
@@ -20,6 +21,6 @@ except ConnectionError as err:
 # Returns the iso codes for available countries 
 def return_countries():
     countries_cursor = collection.distinct("iso_code")
-    countries_list = list(countries_cursor)
+    countries_list = [country for country in countries_cursor if not isinstance(country, float) or not np.isnan(country)]
     print(countries_list)
 return_countries()
